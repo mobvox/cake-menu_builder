@@ -1,6 +1,9 @@
 <?php
-App::import('Helper', 'MenuBuilder.MenuBuilder');
-App::import('Core', 'Controller', 'View');
+
+App::uses('View', 'View');
+App::uses('Controller', 'Controller');
+App::uses('Helper', 'View');
+App::uses('MenuBuilderHelper', 'MenuBuilder.View/Helper');
 
 class MenuBuilderHelperTest extends CakeTestCase {
 
@@ -45,7 +48,7 @@ class MenuBuilderHelperTest extends CakeTestCase {
         $this->Conroller->set(compact('user'));
         $this->Conroller->set(compact('admin'));
         $this->View = new View($this->Conroller);
-        $this->MenuBuilder = new MenuBuilderHelper();
+        $this->MenuBuilder = new MenuBuilderHelper($this->View);
     }
 
 /**

@@ -9,8 +9,6 @@
  * @subpackage MenuBuilder.views.helpers
  */
 
-App::import('Helper', 'Html', 'Router');
-
 class MenuBuilderHelper extends AppHelper {
 /**
  * Helper dependencies
@@ -18,7 +16,7 @@ class MenuBuilderHelper extends AppHelper {
  * @var array
  * @access public
  */
-    var $helpers = array('Html');
+    public $helpers = array('Html');
 
 /**
  * Array of global menu
@@ -87,9 +85,10 @@ class MenuBuilderHelper extends AppHelper {
  *
  * @access public
  */
-    function __construct($config=array()) {
+    function __construct(View $view, $config=array()) {
         $this->settings = am($this->settings, $config);
-        $view =& ClassRegistry::getObject('view');
+        unset($config);
+        
         if(!isset($view->viewVars[$this->settings['menuVar']])) return;
         $this->_menu = $view->viewVars[$this->settings['menuVar']];
         
