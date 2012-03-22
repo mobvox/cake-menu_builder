@@ -135,8 +135,10 @@ class MenuBuilderHelper extends AppHelper {
 		endif;
 	}
 
-	public function build($id=null, $options=array()) {
-		$data =& $this->_menu;
+	public function build($id=null, $options=array(), $data = null) {
+		if(is_null($data)){
+			$data = $this->_menu;
+		}
 		
 		if(!empty($options)){
 			$this->settings = am($this->_settings, $options);
@@ -222,7 +224,9 @@ class MenuBuilderHelper extends AppHelper {
 		$check = false;
 		if(isset($item['url'])):
 			if($item['partialMatch']):
-				$check = (strpos(Router::normalize($this->here), Router::normalize($item['url']))===0);
+				$_url =  preg_quote(Router::normalize($item['url']), '/');
+				$regex =("/{$_url}(\/|$)/");
+				$check = preg_match($regex, Router::normalize($this->here));
 			else :
 				$check = Router::normalize($this->here) === Router::normalize($item['url']);
 			endif;
